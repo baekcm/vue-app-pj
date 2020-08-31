@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클래스 & 스타일 바인딩</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+        .blue {
+            color: blue
+        }
+        
+        .bold {
+            font-weight: bold;
+        }
+        
+        .red {
+            color: red
+        }
+        
+        .font-bold {
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <!-- class 을 사용하는 방법 - data 에 임의의 변수를 만들어서 활용 -->
+        <div :class="{ blue: isBlue, bold: isBold }">Hello</div>
+        <button @click="styleUpdate">changeStyle</button>
+        <br>
+        <!-- class 을 사용하는 방법 - data 에 임의의 객체를 만들어서 활용 -->
+        <div :class="classObj">Vue.js</div>
+        <button @click="changeStyleClassObj">changeStyleClassObj</button>
+        <br>
+        <!-- style 을 사용하는 방법 -->
+        <!-- font-size => fontSize 형식으로 변경해야 한다. -->
+        <div :style="{ color : green, fontSize : size }">Style 활용</div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                isBlue: false,
+                isBold: false,
+                classObj: {
+                    red: false,
+                    'font-bold': false
+                },
+                green: 'green',
+                size: '30px'
+            },
+            methods: {
+                styleUpdate() {
+                    this.isBlue = !this.isBlue;
+                    this.isBold = !this.isBold;
+                },
+                changeStyleClassObj() {
+                    this.classObj.red = !this.classObj.red,
+                        this.classObj['font-bold'] = !this.classObj['font-bold']
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

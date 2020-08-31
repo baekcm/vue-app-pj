@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch 속성</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <!-- 
+        대부분의 경우 computed 속성이 더 적합하지만 사용자가 만든 감시자가 필요한 경우가 있다.
+        그래서 Vue 는 watch 옵션을 통해 데이터 변경에 반응하는 보다 일반적인 방법을 제공한다.
+        이는 데이터 변경에 대한 응답으로 비동기식 또는 시간이 많이 소요되는 조작을 수행하려는
+        경우에 가장 유용하다.
+    -->
+    <div id="app">
+        {{ message }}
+        <button @click="changeMessage">Message Change!</button>
+        <br> {{ updated }}
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: '안녕하세요 Vue.js 공부합시다.',
+                updated: 'NO'
+            },
+            methods: {
+                changeMessage() {
+                    this.message = 'message 가 바뀌었네요';
+                }
+            },
+            computed: {
+                // changeMessage() {
+                //     return this.message = 'event 에 의해 message 가 변경됐습니다.';
+                // }
+            },
+            //--- watch 안에는 감시하고 싶은 data 를 써주면 되는데, message 라고 가정하면
+            //--- message() {} method 처럼 만들어 준다.
+            //--- watch 는 매개변수로 newVal, oldVal 을 받는다.
+            //--- data 의 message 를 지켜보고 있다가 값이 변경되면 실행되면서 newVal 에는
+            //--- 새로 update 된 message 값을 oldVal 에는 기존 message 값이 들어온다.
+            watch: {
+                message(newVal, oldVal) {
+                    console.log(newVal, oldVal);
+                    this.updated = 'YES';
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Binding 알아보기</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        {{ inputData }}
+        <input type="text" :value="inputData">
+        <!-- type 도 bind 가 가능하다. -->
+        <br />
+        <input :type="type">
+        <br />
+        <a :href="link">google로 이동</a>
+        <br />
+        <a :href="getYoutubeLink('UCdFhuTNnRlmzaltD93qqS1w')">불만납득이 YouTube 채널로 이동</a>
+        
+    </div>
+
+    <script>
+        new Vue({
+            el : '#app',
+            data : {
+                inputData : 'hello',
+                type : 'number',
+                link : 'http:google.com',
+                youtubeLink : 'https://www.youtube.com/channel/'
+            },
+            methods : {
+                getYoutubeLink(channel) {
+                    return this.youtubeLink + channel;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

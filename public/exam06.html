@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computed 속성 활용하기</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <!-- 
+        템플릿 내에 표현식을 넣으면 편리하다. 
+        하지만, 간단한 연산일 때만 이용하는 것이 좋다.
+        너무 많은 연산을 템플릿 안에서 하면 코드가 비대해지고 유지보수가 어렵다.
+    -->
+    <div id="app">
+        {{ message }}
+        <!-- 
+            아래의 예는 message 를 split('') 으로 한글자씩 자르는데 배열 형태가 되고,
+            reverse() 를 이용하여 글자 순서를 거꾸로 만든 이후
+            join('') 을 통해 한글자씩 잘라진 배열 형태를 문자열로 합친 결과이다.
+        -->
+        <br> {{ message.split('').reverse().join('') }}
+        <!-- 아래는 computed 에 reversedMessage method 를 활용한 방법이다. -->
+        <br> {{ computedReversedMessage }}
+        <!-- 아래는 methods 에 methodReversedMessage method 를 활용한 방법이다. -->
+        <br> {{ methodReversedMessage() }}
+        <!--
+            methods 와 computed 에서 모두 사용이 가능한데, 차이점은 아래와 같다.
+            가장 큰 차이점음 computed 는 캐싱을 하고, methods 캐싱을 하지 않는다는 것이다.
+            예를 들어, Vue Instance 가 생성될 때 data 에 message 는 사용자가 설정한 값을 
+            가지고 있고, computed 속성이 바로 실행되면서 템플릿을 사용하려고 {{ computedReversedMessage }}
+            할 때 이미 다 계산이 되어 있는 상태이다.
+            하지만, methods 의 method 는 템플릿을 사용하려고 {{ methodReversedMessage() }} 
+            할 때마다 매번 계산을 한다.
+        -->
+        <br>
+        <!-- message 값이 바뀌었을 때 computed 속성이 새로운 데이터에 맞게 변경되는지 이벤트를 생성한다. -->
+        <button @click="changeMessage">Message Change!</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: '안녕하세요 Vue.js 공부합시다.'
+            },
+            methods: {
+                methodReversedMessage() {
+                    return this.message.split('').reverse().join('')
+                },
+                changeMessage() {
+                    this.message = 'message 가 바뀌었네요';
+                }
+            },
+            //--- computed 는 별도의 event 없이 자동으로 실행된다.
+            //--- message 값이 변경된다면, catch 해서 다시 실행되어 적용된다.
+            computed: {
+                computedReversedMessage() {
+                    return this.message.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

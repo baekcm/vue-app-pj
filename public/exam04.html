@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 (Events) 알아보기</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <button onclick="alert('Hello Javascript')">Javascript click</button>
+        <button @click="alert('Hello Vue')">Vue click</button>
+        <br> {{ year }}
+        <button @click="minus">Year Minus</button>
+        <button @click="plus">Year Plus</button>
+        <br>
+        <form @submit.prevent="onSubmit">
+            <input type="text"><br>
+            <button type="submit">Submit</button>
+        </form>
+        <br>
+        <!-- enter key 가 눌러질 때에만 event 발생 -->
+        <input type="text" v-on:keyup.enter="onEnter">
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                year: 2019
+            },
+            methods: {
+                alert(str) {
+                    alert(str);
+                },
+                minus() {
+                    this.year--;
+                },
+                plus() {
+                    this.year++;
+                },
+                onSubmit() {
+                    alert('submitted');
+                    console.log('page reload 발생 시 해당 console 은 출력되었다가 빠르게 사라진다.');
+                },
+                onEnter() {
+                    alert('enter');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-if 와 v-show</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <!-- 
+            v-if 조건안에 "true" 가 들어가면 div tag 가 randering 이 되고, 
+            "false" 가 되면 rendering 이 되지 않는다.
+        -->
+        <div v-if="show">YES</div>
+        <!--
+            v-else 를 사용함으로써 
+            v-if="show" 'true' 이면 'YES', 'false' 이면 'NO' 를 보여준다.
+        -->
+        <div v-else>NO</div>
+        <br>
+        <button @click="toggleShow">toggleShow</button>
+        <br>
+        <!-- 
+            한개의 tag 가 아닌 여러개의 tag 를 동시에 보여지고, 
+            안보여지게 처리하기 위해서는 template 를 사용하면 된다.
+        -->
+        <template v-if="templateShow">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+        </template>
+        <div v-else>7</div>
+        <button @click="toggleTemplateShow">toggleTemplateShow</button>
+        <br>
+        <!-- v-if, v-else-if, v-else 혼합 사용 -->
+        <template v-if="number === 1">
+            <div>유재석</div>
+            <div>강호동</div>
+            <div>이수근</div>
+        </template>
+        <div v-else-if="number === 2">아이즈원</div>
+        <div v-else>Vue.js</div>
+        <button @click="increaseNumber">increase</button>{{ number }}
+        <br>
+
+        <!-- v-show 는 style="display: none;" 으로 style 로 숨김 처리를 한다. -->
+        <div v-show="vShow">v-show state</div>
+        <br>
+        <button @click="toggleVshow">v-show Click</button>
+
+        <!--
+            v-if 는 if 상태가 'false' 이면 rendering 을 하지 않고,
+            v-show 는 rendering 을 하는데, style 속성을 활용하여 처리한다.
+            일반적으로 v-if 는 토글 비용이 높고, v-show 는 초기 렌더링 비용이 높다.
+            결론적으로, 매우 자주 바뀌는 경우 v-show 를, 
+            런타임 시 조건이 바뀌지 않으면 v-if 를 권장한다.            
+        -->
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                show: true,
+                templateShow: true,
+                number: 1,
+                vShow: false
+            },
+            methods: {
+                toggleShow() {
+                    this.show = !this.show;
+                },
+                toggleTemplateShow() {
+                    this.templateShow = !this.templateShow;
+                },
+                increaseNumber() {
+                    this.number++;
+                },
+                toggleVshow() {
+                    this.vShow = !this.vShow;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

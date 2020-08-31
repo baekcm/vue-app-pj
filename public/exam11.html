@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여러개의 Vue 인스턴스 사용하기</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+        <button @click="changeMessage">Click</button>
+    </div>
+    <br>
+    <div id="app1">
+        {{ message }}
+        <button @click="changeMessage">Click</button>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello World'
+            },
+            methods: {
+                changeMessage() {
+                    //this.message = 'app 의 message 가 바뀌었습니다.';
+                    //--- Vue Instance 를 통해 app1 의 message 값을 변경할 수 있다.
+                    app1.message = 'app Instance 를 통해 app1 의 message 값을 변경했습니다.';
+                }
+            }
+        })
+
+        const app1 = new Vue({
+            el: '#app1',
+            data: {
+                message: 'Hello Vue'
+            },
+            methods: {
+                changeMessage() {
+                    //--- Vue Instance 를 통해 app 의 message 값을 변경할 수 있다.
+                    //this.message = 'app1 의 message 가 바뀌었습니다.';
+                    app.message = 'app1 Instance 를 통해 app 의 message 값을 변경했습니다.';
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

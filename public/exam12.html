@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 컴포넌트</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}<br>
+        <button @click="changeMessage">Click</button>
+
+        <hr>
+        <my-component></my-component>
+    </div>
+    <hr>
+    <hr>
+    <div id="app1">
+        {{ message }}<br>
+        <button @click="changeMessage">Click</button>
+
+        <hr>
+        <my-component></my-component>
+    </div>
+    <script>
+        //--- component 는 재 사용을 위한 Vue의 컴파일러에 의해 동작이 추가된 사용자 지정 엘리먼트이다.
+        //--- Vue.component(tagName(String), options(Object))
+        //--- Vue는 사용자 지정 태그 이름에 대해 모두 소문자이어야 하고 하이픈을 포함해야 한다.
+        //--- Component 안에 Component 를 넣어 사용 가능하다. <hello-world> 참조.
+        Vue.component('my-component', {
+            //--- template 안에는 html tag 가 들어간다.
+            template: `<div>{{ message }}<br>
+                       <hello-world></hello-world>
+                       <button @click="changeMessage">Click</button></div>`,
+            //--- data 에 object 를 넣을 경우 reference 가 넘어가기 때문에 값이 변경될 경우 사용하는 곳 
+            //--- 모두에서 값이 변경되기 때문에 함수로 바꿔줘야 한다.
+            data() {
+                return {
+                    message: 'component 를 사용합니다.'
+                }
+            },
+            methods: {
+                changeMessage() {
+                    this.message = 'component changeMessage event 에 의해 message updated!'
+                }
+            }
+        });
+
+        Vue.component('hello-world', {
+            template: `<div>hello world</div>`
+        });
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'AS-IS Value'
+            },
+            methods: {
+                changeMessage() {
+                    this.message = 'app Instance TO-BE Value'
+                }
+            }
+        })
+
+        const app1 = new Vue({
+            el: '#app1',
+            data: {
+                message: 'Hello Vue'
+            },
+            methods: {
+                changeMessage() {
+                    this.message = 'app1 Instance TO-BE Value';
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
