@@ -11,7 +11,7 @@
     <div>
         <h1>Single File Component</h1>
         <p>{{ message }}</p>
-        <HomeInner />
+        <HomeInner title="Inner 에 보내줄 title value 는 'Home' 입니다." />
     </div>
 </template>
 
