@@ -1,0 +1,19 @@
+<template>
+  <div class="home">
+    <img alt="Vue logo" src="../assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  </div>
+</template>
+
+<script>
+// @ is an alias to /src
+import HelloWorld from '@/components/HelloWorld.vue'    // 앞에 '@' 넣으면 src 를 가리킨다.
+//import HelloWorld from '../components/HelloWorld.vue' // 상대 경로 방식
+
+export default {
+  name: 'Home',
+  components: {
+    HelloWorld
+  }
+}
+</script>

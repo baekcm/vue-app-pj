@@ -27,7 +27,13 @@
         <hr>
         <my-component></my-component>
     </div>
+    <hr>
+    <hr>
+    <div id="app2">
+        <my-component></my-component>
+    </div>
     <script>
+        //--- 아래의 Component 등록 방법은 "전역 등록" 방법이다.
         //--- component 는 재 사용을 위한 Vue의 컴파일러에 의해 동작이 추가된 사용자 지정 엘리먼트이다.
         //--- Vue.component(tagName(String), options(Object))
         //--- Vue는 사용자 지정 태그 이름에 대해 모두 소문자이어야 하고 하이픈을 포함해야 한다.
@@ -41,7 +47,7 @@
             //--- 모두에서 값이 변경되기 때문에 함수로 바꿔줘야 한다.
             data() {
                 return {
-                    message: 'component 를 사용합니다.'
+                    message: '전역 component 를 사용합니다.'
                 }
             },
             methods: {
@@ -76,6 +82,33 @@
                 changeMessage() {
                     this.message = 'app1 Instance TO-BE Value';
                 }
+            }
+        })
+
+
+        //--- localComponent 변수를 선언하고 값을 object 로 한다.
+        const localComponent = {
+            template: `<div>
+                            {{ message }}<br>
+                            <hello-world></hello-world>
+                            <button @click="changeMessage">Click</button>
+                       </div>`,
+            data() {
+                return {
+                    message: '지역 component 를 사용합니다.'
+                }
+            },
+            methods: {
+                changeMessage() {
+                    this.message = 'component changeMessage event 에 의해 message updated!'
+                }
+            }
+        }
+
+        const app2 = new Vue({
+            el: '#app2',
+            components: {
+                'my-component': localComponent
             }
         })
     </script>
