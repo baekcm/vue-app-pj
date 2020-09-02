@@ -1,9 +1,33 @@
 <template>
     <div>
+        <!-- 
+            슬롯 (Slot) 사용시기 : component 를 사용하는데, 일부는 그대로 사용하고 싶은데, 
+            특정 위치에 원하는 html code 를 따로 추가하고 싶을 때 사용한다.
+            사용 방법은 component 의 원하는 자리에 <slot></slot> tag 를 넣어준다.
+            그리고, slot 을 추가한 component 를 사용하는 Home.vue file 에서 20 라인 참조하여 사용법을 확인.
+            또한, slot 은 다중으로 사용이 가능하다.
+        -->
+        <!-- 
         <h1>{{ title }}</h1>
+        <slot></slot>
         <p>{{ innerText }}</p>
         <br>
         <button @click="changeMessage">Change Message</button>
+        -->
+
+        <!-- 
+            Home.vue 파일의 template slot 이 header 인 값에 추가로 임의의 값을 넣고 싶은 경우 
+            :임의의속성="data명" 을 적어준다.
+            그러면 Home.vue 파일에서는 36라인 참조. v-slot:header="임의의 변수"
+            그리고 Home.vue 파일에서는 42라인 참조. 기존 값 옆에 {{ params.slotText }} 형식으로 추가.
+        -->
+        <p>header</p>
+        <slot name="header" :slotText="slotText"></slot>
+        <p>body</p>
+        <slot name="body"></slot>
+        <p>footer</p>
+        <slot></slot>
+    
     </div>
 </template>
 
@@ -34,7 +58,8 @@
         },
         data() {
             return {
-                innerText: 'Home.vue Page Inner Page!!!'
+                innerText: 'Home.vue Page Inner Page!!!',
+                slotText: 'add text'
             }
         },
         methods: {
