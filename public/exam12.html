@@ -32,6 +32,17 @@
     <div id="app2">
         <my-component></my-component>
     </div>
+    <hr>
+    <hr>
+
+    <div id="app3">
+        <div>
+            <div class="flex">
+                <product image="https://picsum.photos/300/200?image=0" avatar="https://picsum.photos/30/30?image=80" title="노트북" description="노트북 상품 설명"></product>
+            </div>
+        </div>
+    </div>
+
     <script>
         //--- 아래의 Component 등록 방법은 "전역 등록" 방법이다.
         //--- component 는 재 사용을 위한 Vue의 컴파일러에 의해 동작이 추가된 사용자 지정 엘리먼트이다.
@@ -110,6 +121,34 @@
             components: {
                 'my-component': localComponent
             }
+        })
+
+
+
+        Vue.component('product', {
+            props: ['image', 'title', 'description', 'avatar'],
+            template: `
+                <div class="flex-1 px-5">
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                        <img class="w-full" :src="image">
+                        <div class="px-6 py-4">
+                            <div class="relative">
+                                <div class="absolute pin-l pin-t bg-white border border-pear-dark rounded-full" style="">
+                                    <img class="block rounded-full" :src="avatar">
+                                </div>
+                            </div>
+                            <div class="font-bold text-xl mb-2">{{ title }}</div>
+                            <p class="text-grey-darker text-base">
+                                {{ description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `
+        });
+
+        const app3 = new Vue({
+            el: '#app3'
         })
     </script>
 </body>
