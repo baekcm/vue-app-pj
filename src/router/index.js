@@ -27,6 +27,10 @@ const UsersEdit = () => {
     return import ('../views/UsersEdit.vue')
 }
 
+const AllUsers = () => {
+    return import ('@/components/Users/AllUsers.vue')
+}
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -72,6 +76,17 @@ const routes = [{
                 component: UsersEdit
             }
         ]
+    },
+    {
+        path: '/all-users',
+        name: 'AllUsers',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        //--- component 에 Home 과 같이 import 추가하고 사용해도 되지만 아래처럼 사용하는 방법도 있다.
+        //--- component 를 입력하는 방식 - [3 번]
+        //component: () => import ( /* webpackChunkName: "about" */ '../views/About.vue')
+        component: AllUsers
     },
     {
         path: '/redirect-me',

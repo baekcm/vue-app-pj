@@ -10,7 +10,9 @@
       <!-- Users 하위 경로에서만 router-viuw 를 사용할 목적인 테스트를 위해 주석. -->
       <!-- <router-link :to="{ name: 'users', params: { userId: 12345, userName: 'baekcm' }, query: { group: 'member', category: 'trial' } }">Users</router-link> -->
 
-      <router-link :to="{ name: 'users' }">Users</router-link>
+      <router-link :to="{ name: 'users' }">Users</router-link> | 
+
+      <router-link to="/all-users">AllUsers</router-link>
 
     </div>
     <router-view />
