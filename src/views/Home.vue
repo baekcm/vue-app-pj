@@ -10,6 +10,12 @@
 <template>
     <div>
         <h1>Single File Component</h1>
+        <!-- 아래의 방식은 mixins 를 이용한 현재 날짜 출력 방식이다 -->
+        <p>{{ getDateAndTime(createdAt) }}</p>
+        <p>{{ helloToMixin }}</p>
+
+        <!-- 아래의 방식은 현재 날짜를 moment library 를 이용하여 format 한 날짜 출력 방식이다. -->
+        <!-- <p>{{ new Date() | moment('YYYY-MM-DD HH:mm:ss') }}</p> -->
         <p>{{ message }}</p>
         <p>{{ name }}</p>
         <button @click="updateName">변경</button>
@@ -67,6 +73,9 @@ import HomeInner from '@/components/Inner.vue';
 
 import { eventBus } from '@/main'
 
+//--- export 한 mixins /mixins/dateFormat.js 파일을 import 한다.
+import { dateFormat } from '@/mixins/dateFormat';
+
 export default {
     //--- components object 내에 HomeInner 를 넣어 자식 component 로 사용한다.
     components: {
@@ -76,7 +85,17 @@ export default {
         return {
             message : 'Vue Cli 를 통해 Single File Component 재 작성 테스트',
             testText: '생성',
-            name: ''
+            name: '',
+            createdAt : null
+        }
+    },
+
+    computed : {
+        //--- mixins 의 data 변수를 사용하기 위해 테스트.(mixins file : dateFormat.js / data : mixinData)
+        //--- mixins 에서 만들어진 함수나 data 등은 Home.vue 파일의 Vue Instance 내에 자연스럽게 녹아들었기때문에
+        //--- this. 으로 변수 또는 메소드 사용이 자연스럽게 가능하다.
+        helloToMixin() {
+            return this.mixinData + ' Home.vue mixins';
         }
     },
 
@@ -90,6 +109,8 @@ export default {
     //--- 보통 서버에 요청을 보내서 응답을 받아온 데이터를 data 에 update 해줄 때 사용한다.
     created() {
         console.log('created', this.testText); // 생성
+        this.createdAt = new Date();
+        console.log('createdAt', this.createdAt);
     },
 
     //--- dom 이 아직 mount 가 되지 않았기 때문에 <div id="app"></div> 가 비어있는 상태.
@@ -134,10 +155,12 @@ export default {
             //--- evenBus 에 nameWasEdited 신호를 $emit 으로 보내고 있다.
             //--- $emit 은 자식 component 에서 부모 component 로 신호를 전달할 때 사용한다.
             //--- evenBus 라는 새로운 Vue Instance 가 부모 component 의 역할을 한다 라고 추론할 수 있다.
-            //eventBus.$emit('nameWasEdited', new Date())
-            eventBus.nameWasEdited(new Date());
+            eventBus.$emit('nameWasEdited', new Date())
+            //eventBus.nameWasEdited(new Date());
         }
-    }
+    },
+    //--- mixins 를 사용하기 위해 mixins 속성값을 사용하고, 배열의 값으로 import 한 파일의 변수값을 넣어준다. 71라인 참조.
+    mixins: [dateFormat]
 }    
 </script>
 

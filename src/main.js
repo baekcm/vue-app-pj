@@ -7,6 +7,10 @@ import store from './store'
 import header from './header'
 import footer from './footer'
 
+//--- 날짜 형식 library 사용
+import vueMoment from 'vue-moment'
+Vue.use(vueMoment)
+
 /*
  * main.js 파일은 vue application 을 관장하는 역할을 한다.
  * main.js 파일에서 선언해준 header component 는 어느 파일에서나 사용 가능하다.
