@@ -11,6 +11,8 @@
     <div>
         <h1>Single File Component</h1>
         <p>{{ message }}</p>
+        <p>{{ name }}</p>
+        <button @click="updateName">변경</button>
         
         <!-- 부모 component 인 Home.vue 에서 자식 component 인 Inner.vue 에 title 이라는 값을 전달한다. -->
         <!-- Inner.vue 파일에서 <slot> 을 사용하기 때문에 아래의 내용을 변경한다. -->
@@ -62,6 +64,8 @@
 <script>
 //--- HomeInner 이름으로 Inner.vue 를 import 한다.
 import HomeInner from '@/components/Inner.vue';
+
+import { eventBus } from '@/main'
 
 export default {
     //--- components object 내에 HomeInner 를 넣어 자식 component 로 사용한다.
@@ -127,6 +131,11 @@ export default {
     methods: {
         updateName() {
             this.name = 'hello';
+            //--- evenBus 에 nameWasEdited 신호를 $emit 으로 보내고 있다.
+            //--- $emit 은 자식 component 에서 부모 component 로 신호를 전달할 때 사용한다.
+            //--- evenBus 라는 새로운 Vue Instance 가 부모 component 의 역할을 한다 라고 추론할 수 있다.
+            //eventBus.$emit('nameWasEdited', new Date())
+            eventBus.nameWasEdited(new Date());
         }
     }
 }    

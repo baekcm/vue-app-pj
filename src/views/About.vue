@@ -21,6 +21,7 @@
     <br>
     <!-- 자식 component 에서 부모 component 에 값을 전달하는 방법. -->
     <form action="">
+        <p>{{ editedDate }}</p>
         <!-- 
             부모가 자식이 보내준 값을 전달받기 위해 자식 component 에서 사용한 @event명 을 적어준다. 
             @update-name event 로 받은 것을 method 로 실행시키면은 매개변수로 value 가 들어간다.
@@ -39,7 +40,6 @@
         <InputField v-model="name" />
         <br><button @click="Submit">Submit</button>
     </form>
-    {{ name }}
   </div>
 </template>
 
@@ -56,8 +56,10 @@ import InputField from '@/components/InputField.vue';
 //--- AboutInner 이름으로 Inner.vue 를 import 한다.
 import AboutInner from '@/components/Inner.vue';
 
+import { eventBus } from '@/main'
+
 export default {
-    //--- components object 내에 AboutInner 를 넣어 자식 component 로 사용한다.
+    //--- components object 내에 AboutInner, InputField 를 넣어 자식 component 로 사용한다.
     components: {
         AboutInner,
         InputField
@@ -66,7 +68,8 @@ export default {
         return {
             message : 'Vue Cli 를 통해 Single File Component 재 작성 테스트',
             title: 5,
-            name : ''
+            name : '',
+            editedDate : null
         }
     },
     methods: {
@@ -85,6 +88,13 @@ export default {
             this.name = name;
         }
         */
+    },
+    created() {
+        //--- vue instance 내에서 callback 함수를 쓸때는 arrow function 을 통해서 작성해줘야 this 가 그대로 vue 모델을 가리킨다.
+        eventBus.$on('nameWasEdited', date => {
+            console.log(date);
+            this.editedDate = date;
+        })
     }
 }    
 </script>
