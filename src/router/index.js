@@ -9,14 +9,17 @@ import Home from '../views/Home.vue'
 import vueMoment from 'vue-moment'
 Vue.use(vueMoment)
 
-Vue.use(VueRouter)
-
 //--- component 를 입력하는 방식 - [2 번]
-/*
 const About = () => {
     return import ('../views/About.vue')
 }
-*/
+
+//--- router 로 주소를 이동하면서 값을 함께 넘기는 방법을 확인하는 용도의 Users.vue 파일 import
+const Users = () => {
+    return import ('../views/Users.vue')
+}
+
+Vue.use(VueRouter)
 
 const routes = [{
         path: '/',
@@ -31,9 +34,19 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         //--- component 에 Home 과 같이 import 추가하고 사용해도 되지만 아래처럼 사용하는 방법도 있다.
         //--- component 를 입력하는 방식 - [3 번]
-        component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/About.vue')
-            //component: About
+        //component: () => import ( /* webpackChunkName: "about" */ '../views/About.vue')
+        component: About
+    },
+    {
+        path: '/users',
+        //--- router 에서 path 에 :userId(속성이름) 뒤에 지정해주는 이러한 형태가 아니더라도 App.vue 파일의
+        //--- router-link 에 parameter 를 넣어서 충분히 그 값들을 보내줄 수 있다.
+        //--- 아래의 방법은 직접적으로 주소창을 이용해 값을 전달해주고자 할 때 사용한다.
+        //path: '/users/:userId',
+        name: 'users',
+        component: Users,
+        // true로 설정하면 데이터를 props로도 받습니다.
+        props: true
     }
 ]
 
