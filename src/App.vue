@@ -7,7 +7,11 @@
       <!-- <router-link to="/users">Users</router-link> -->
 
       <!-- 아래의 방식은 parameter 를 객체로 만들어서 전달한다. -->
-      <router-link :to="{ name: 'users', params: { userId: 12345, userName: 'baekcm' } }">Users</router-link>
+      <!-- Users 하위 경로에서만 router-viuw 를 사용할 목적인 테스트를 위해 주석. -->
+      <!-- <router-link :to="{ name: 'users', params: { userId: 12345, userName: 'baekcm' }, query: { group: 'member', category: 'trial' } }">Users</router-link> -->
+
+      <router-link :to="{ name: 'users' }">Users</router-link>
+
     </div>
     <router-view />
     <footer-app />

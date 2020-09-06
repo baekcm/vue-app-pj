@@ -19,6 +19,14 @@ const Users = () => {
     return import ('../views/Users.vue')
 }
 
+const UsersDetail = () => {
+    return import ('../views/UsersDetail.vue')
+}
+
+const UsersEdit = () => {
+    return import ('../views/UsersEdit.vue')
+}
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -38,15 +46,42 @@ const routes = [{
         component: About
     },
     {
-        path: '/users',
+        //path: '/users',
         //--- router 에서 path 에 :userId(속성이름) 뒤에 지정해주는 이러한 형태가 아니더라도 App.vue 파일의
         //--- router-link 에 parameter 를 넣어서 충분히 그 값들을 보내줄 수 있다.
         //--- 아래의 방법은 직접적으로 주소창을 이용해 값을 전달해주고자 할 때 사용한다.
-        //path: '/users/:userId',
+
+        //--- Users 하위 경로
+        /*
+        path: '/users/:userId',
+        name: 'users',
+        component: Users
+        */
+
+        path: '/users',
         name: 'users',
         component: Users,
-        // true로 설정하면 데이터를 props로도 받습니다.
-        props: true
+        children: [{
+                path: ':id',
+                name: 'users-detail',
+                component: UsersDetail
+            },
+            {
+                path: ':id/edit',
+                name: 'users-edit',
+                component: UsersEdit
+            }
+        ]
+    },
+    {
+        path: '/redirect-me',
+        redirect: { name: 'Home' }
+    },
+    //--- 주소창에 사용자가 임의로 예상치못한 주소를 입력하게될 경우 Home 과 같은 경로로 redirect 시켜준다.
+    //--- path: '/*' : 위에 선언된 모든 주소에서 경로를 찾을 수 없는 경우 redirect 경로로 이동시킨다.
+    {
+        path: '/*',
+        redirect: { name: 'Home' }
     }
 ]
 
