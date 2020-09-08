@@ -25,7 +25,8 @@ Vue.use(Vuex)
  */
 
 export default new Vuex.Store({
-    //--- state : 상태. Vue Instance 의 data() 에 역할을 한다.
+    //--- state : 상태값 정의. Vue Instance 의 data() 에 역할을 한다.
+    //--- Component 에서 data 를 정의한 것처럼 넣어주면 된다.
     state: {
         allUsers: [
             { userId: 'one2006', password: '123', name: '원영', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5095%2F2020%2F06%2F15%2F0000925519_004_20200615165007685.jpg&type=b400' },

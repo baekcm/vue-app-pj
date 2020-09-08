@@ -76,6 +76,10 @@ import { eventBus } from '@/main'
 //--- export 한 mixins /mixins/dateFormat.js 파일을 import 한다.
 import { dateFormat } from '@/mixins/dateFormat';
 
+//--- vuex 에서 데이터를 가져오기 위해(store 폴더의 index.js 파일의 state 에 담긴 allUsers 배열값을 가져오기 위해)
+//--- vuex 에서 제공하는 mapState Helper 를 사용하면 된다.
+import { mapState } from 'vuex';
+
 export default {
     //--- components object 내에 HomeInner 를 넣어 자식 component 로 사용한다.
     components: {
@@ -96,7 +100,27 @@ export default {
         //--- this. 으로 변수 또는 메소드 사용이 자연스럽게 가능하다.
         helloToMixin() {
             return this.mixinData + ' Home.vue mixins';
-        }
+        },
+        //--- computed 안에 스프레드 연산자를 사용해서 mapState 함수가 리턴하는 값을 반영해준다.(81 라인 mapState 와 연결되는 내용)
+        //--- 스프레드 연산자는 json, 배열 등을 합치는 작업을 쉽게 도와준다.
+        /*
+        ** ex) 
+        ** let json = {a: 'a', b: 'b'};
+        ** let json2 = {c: 'c', d: 'd'};
+        ** 두개의 객체를 합치려면 {...json, ...json2} 쓰면 된다.
+        */
+        //--- mapState 로 vuex 에서 데이터를 꺼내올 수 있는 방법은 3가지가 있다.
+        ...mapState({
+            //--- 1. component 에서 변수처럼 사용할 computed 명을 적고 vuex state 에서 원하는 값을 꺼내올 익명함수를 정의한다.
+            // dataList: state => state.dataList
+            //--- 2. vuex state 에서 바로 값을 가져오는 간단한 표현식이라면 문자열만 입력해도 된다.
+            // dataList: 'dataList'
+            //--- 3. 메소드로 지정한다. 만약, 가져오는 state 값과 내부 데이타 값을 가지고 계산해야 하는 등의 복잡한 작업이 필요한 경우 사용
+            // dataList(state) {
+            //      return state.dataList.filter(data => data.new >= 2);
+            //--- this 를 사용해서 내부 data 에 접근하는 등의 작업을 수행할 수도 있다.
+            // }
+        })
     },
 
     //--- Instance 생성 전 - data 에 접근이 불가능하다.
@@ -115,38 +139,41 @@ export default {
 
     //--- dom 이 아직 mount 가 되지 않았기 때문에 <div id="app"></div> 가 비어있는 상태.
     beforeMount() {
-        alert('beforeMount');
+        //alert('beforeMount');
     },
 
+    //--- Component 가 화면에 뿌려진 뒤 실행되는 메소드.
     //--- <div id="app"></div> 가 채워진다. dom 에 접근이 가능하다.
     //--- dom 을 controll 하고 싶은 경우 mounted() 에서 하면 된다.
     mounted() {
-        alert('mounted');
+        //alert('mounted');
+        //--- store 에 접근이 잘 되는지 확인.
+        console.log(this.$store);
     },
 
     //--- 만약 button click event 를 발생시켜 data 의 값을 변경하려고 하는 경우
     //--- 값이 바뀌기 이전에 경고창이 출력된다.
     beforeUpdate() {
-        alert('beforeUpdate');
+        //alert('beforeUpdate');
     },
 
     //--- 만약 button click event 를 발생시켜 data 의 값을 변경하려고 하는 경우
     //--- 값이 바뀌기 이전에 경고창이 출력된다.
     //--- 다만, 확인을 누르는 경우 값이 변경된다.
     updated() {
-        alert('updated');
+        //alert('updated');
     },
 
     //--- 다른 페이지로 이동할 때 해당 경고창이 출력된다.
     beforeDestroy() {
-        alert('beforeDestroy');
+        //alert('beforeDestroy');
     },
 
     //--- 다른 페이지로 이동할 때 해당 경고창이 출력된다.
     //--- 메모리 누수를 방지하기 위해 event listner 를 달아놓은 경우 삭제하고,
     //--- 데이터를 초기화 하는 등의 작업을 하는데 유리하다.
     destroyed() {
-        alert('destroyed');
+        //alert('destroyed');
     },
 
     methods: {
