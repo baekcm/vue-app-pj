@@ -35,7 +35,21 @@ export default new Vuex.Store({
             { userId: 'cha2001', password: '900', name: '채연', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F112%2F2020%2F04%2F03%2F202004032153247161879_20200403215442_01_20200403215911849.jpg&type=b400' },
         ]
     },
-    mutations: {},
+    //--- mutations event 호출하는 component 에서 click event 라 가정 시
+    /*
+     ** methods: {
+     **      itemClick() {
+     **          this.$store.commit('selectedUser', {...this.user});
+     **      }
+     ** }
+     */
+    mutations: {
+        /*
+        selectedUser(state, userId) {
+
+        }
+        */
+    },
     actions: {},
     modules: {}
 })
