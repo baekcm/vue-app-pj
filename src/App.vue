@@ -16,9 +16,68 @@
 
     </div>
     <router-view />
+    <h1 style="textAlign: left">Tree</h1>
+    <ul is="tree" :data="treeData" style="textAlign: left">
+        <li slot-scope="{ item }">
+            <span>{{ item.name }}</span>
+            <button @click="$set(item, 'showChildren', !item.showChildren)" style="margin: 5px;">+/-</button>
+            <ul is="childTree" :data="item.children" v-show="item.showChildren" />
+        </li>
+    </ul>
     <footer-app />
+
   </div>
+  
 </template>
+
+<script>
+//--- $ npm install array-to-tree --save
+//--- https://www.npmjs.com/package/array-to-tree
+var arrayToTree = require('array-to-tree');
+
+var dataOne = [
+  {
+    id: 1,
+    name: 'Portfolio',
+    parent_id: undefined
+  },
+  {
+    id: 2,
+    name: 'Web Development',
+    parent_id: 1
+  },
+  {
+    id: 3,
+    name: 'Recent Works',
+    parent_id: 2
+  },
+  {
+    id: 4,
+    name: 'About Me',
+    parent_id: undefined
+  }
+];
+ 
+console.log(arrayToTree(dataOne));
+
+export default {
+    name: 'app',
+    data () {
+        return {
+            treeData : [
+                { name : 'AAA1', children : [
+                    { name : 'AAA1-1', children : [
+                      { name : 'AAA1-1-1' },
+                      { name : 'AAA1-1-2' }
+                    ]},
+                  { name : 'AAA1-2' }
+                ]},
+            { name : 'BBB1' }
+          ]
+      }
+    }
+}
+</script>
 
 <style>
 #app {
@@ -41,4 +100,5 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
 </style>

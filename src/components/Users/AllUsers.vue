@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { EventBus } from '@/main.js'
+import { eventBus } from '@/main.js'
 
     export default {
         data() {
@@ -25,8 +25,8 @@ import { EventBus } from '@/main.js'
             }
         },
         mounted() {
-            //--- EventBus.$on('sign명', 전달 받을 객체명) 형재 component 의 event sign 을 기다린다.
-            EventBus.$on('signUp', users => {
+            //--- eventBus.$on('sign명', 전달 받을 객체명) 형재 component 의 event sign 을 기다린다.
+            eventBus.$on('signUp', users => {
                 //--- $store.state.배열명에 형제 component 로 전달받은 users 값을 배열에 추가한다.
                 this.$store.state.allUsers.push(users);
             })

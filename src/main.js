@@ -7,9 +7,9 @@ import store from './store'
 import header from './header'
 import footer from './footer'
 
-//--- 날짜 형식 library 사용
-import vueMoment from 'vue-moment'
-Vue.use(vueMoment)
+//--- 전역적으로 사용할 tree.js 파일을 import 한다.
+import Tree from './tree'
+Vue.use(Tree)
 
 /*
  * main.js 파일은 vue application 을 관장하는 역할을 한다.
