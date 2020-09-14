@@ -1,6 +1,6 @@
 <template>
     <div>
-        <tree-view :data="items" :options="{ maxDepth: 3 }"></tree-view>
+        <tree-view :data="items" :options="{ maxDepth: 4, modifiable: false }"></tree-view>
     </div>
 </template>
 

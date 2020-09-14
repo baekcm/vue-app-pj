@@ -39,6 +39,10 @@ const TreeView = () => {
     return import ('../views/TreeView.vue')
 }
 
+const TreeViewTwo = () => {
+    return import ('../views/TreeView2.vue')
+}
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -105,6 +109,11 @@ const routes = [{
         path: '/treeview',
         name: 'TreeView',
         component: TreeView
+    },
+    {
+        path: '/treeviewtwo',
+        name: 'TreeViewtwo',
+        component: TreeViewTwo
     },
     {
         path: '/redirect-me',

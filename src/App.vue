@@ -18,7 +18,9 @@
 
       <router-link to="/tree">TreeList</router-link> |
 
-      <router-link to="/treeview">TreeView</router-link>
+      <router-link to="/treeview">TreeView</router-link> |
+
+      <router-link to="/treeviewtwo">TreeViewTwo</router-link>
 
       <!--
       <template>

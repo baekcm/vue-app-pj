@@ -20,6 +20,9 @@ import 'vuetify/dist/vuetify.min.css'
 import TreeView from "vue-json-tree-view"
 Vue.use(TreeView)
 
+import { TreeViewPlugin } from "@syncfusion/ej2-vue-navigations";
+Vue.use(TreeViewPlugin);
+
 
 /*
  * main.js 파일은 vue application 을 관장하는 역할을 한다.
