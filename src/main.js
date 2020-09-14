@@ -17,6 +17,10 @@ Vue.use(Vuetify)
 // index.js or main.js
 import 'vuetify/dist/vuetify.min.css'
 
+import TreeView from "vue-json-tree-view"
+Vue.use(TreeView)
+
+
 /*
  * main.js 파일은 vue application 을 관장하는 역할을 한다.
  * main.js 파일에서 선언해준 header component 는 어느 파일에서나 사용 가능하다.

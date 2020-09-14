@@ -16,7 +16,9 @@
 
       <router-link to="/all-users">AllUsers</router-link> |
 
-      <router-link to="/tree">TreeList</router-link>
+      <router-link to="/tree">TreeList</router-link> |
+
+      <router-link to="/treeview">TreeView</router-link>
 
       <!--
       <template>
@@ -39,7 +41,6 @@
         </v-treeview>
     </template>
     -->
-
 
     </div>
     <router-view />
