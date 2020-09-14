@@ -11,6 +11,12 @@ import footer from './footer'
 import Tree from './tree'
 Vue.use(Tree)
 
+import Vuetify from 'vuetify'
+Vue.use(Vuetify)
+
+// index.js or main.js
+import 'vuetify/dist/vuetify.min.css'
+
 /*
  * main.js 파일은 vue application 을 관장하는 역할을 한다.
  * main.js 파일에서 선언해준 header component 는 어느 파일에서나 사용 가능하다.
@@ -20,6 +26,60 @@ Vue.component('header-app', header);
 Vue.component('footer-app', footer);
 
 Vue.config.productionTip = false
+
+
+// define the tree-item component
+Vue.component('TreeList', {
+    template: `
+        <li>
+            <div
+                :class="{bold: isFolder}"
+                @click="toggle"
+                @dblclick="makeFolder">
+                {{ item.name }}
+                <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
+            </div>
+            <ul v-show="isOpen" v-if="isFolder">
+                <TreeList
+                    class="item"
+                    v-for="(child, index) in item.children"
+                    :key="index"
+                    :item="child"
+                    @make-folder="$emit('make-folder', $event)"
+                    @add-item="$emit('add-item', $event)"
+                ></TreeList>
+                <li class="add" @click="$emit('add-item', item)">+</li>
+            </ul>
+        </li>
+    `,
+    props: {
+        item: Object
+    },
+    data: function() {
+        return {
+            isOpen: false
+        }
+    },
+    computed: {
+        isFolder: function() {
+            return this.item.children &&
+                this.item.children.length
+        }
+    },
+    methods: {
+        toggle: function() {
+            if (this.isFolder) {
+                this.isOpen = !this.isOpen
+            }
+        },
+        makeFolder: function() {
+            if (!this.isFolder) {
+                this.$emit('make-folder', this.item)
+                this.isOpen = true
+            }
+        }
+    }
+})
 
 //--- 전역적으로 Vue Component를 등록하고 싶다면 아래의 Vue Instance 가 생성되기 이전에 생성한다.
 //--- Vue.component(tagName(String):component명, options(Object))
@@ -49,6 +109,66 @@ export const eventBus = new Vue({
     },
 });
 */
+
+var treeData = {
+    name: 'My Tree',
+    children: [{
+            name: 'hello'
+        },
+        {
+            name: 'wat'
+        },
+        {
+            name: 'child folder',
+            children: [{
+                    name: 'child folder',
+                    children: [{
+                            name: 'hello'
+                        },
+                        {
+                            name: 'wat'
+                        }
+                    ]
+                },
+                {
+                    name: 'hello'
+                },
+                {
+                    name: 'wat'
+                },
+                {
+                    name: 'child folder',
+                    children: [{
+                            name: 'hello'
+                        },
+                        {
+                            name: 'wat'
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
+export const demo = new Vue({
+    el: '#demo',
+    data: {
+        treeData: treeData
+    },
+    methods: {
+        makeFolder: function(item) {
+            Vue.set(item, 'children', [])
+            this.addItem(item)
+        },
+        addItem: function(item) {
+            item.children.push({
+                name: 'new stuff'
+            })
+        }
+    }
+})
+
 
 /* 
  * 하지만, 보통 Vue Cli 를 이용해서 Vue Project 를 설치했을때는 Vue file 을 만들어줘서

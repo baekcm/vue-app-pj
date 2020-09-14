@@ -31,6 +31,10 @@ const AllUsers = () => {
     return import ('@/components/Users/AllUsers.vue')
 }
 
+const TreeList = () => {
+    return import ('../views/TreeMain.vue')
+}
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -87,6 +91,11 @@ const routes = [{
         //--- component 를 입력하는 방식 - [3 번]
         //component: () => import ( /* webpackChunkName: "about" */ '../views/About.vue')
         component: AllUsers
+    },
+    {
+        path: '/tree',
+        name: 'TreeList',
+        component: TreeList
     },
     {
         path: '/redirect-me',
