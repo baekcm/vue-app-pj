@@ -20,7 +20,12 @@
             부모 component 인 About.vue 에서 InputField v-model 을 사용하여 :value="value" 로 변경하였다. 
             또한, @input="$emit('update-name', $event)" => @input="$emit('input', $event.target.value)" 로 바꿔준다.
         -->
-        <input type="text" :value="value" style="padding: 30px; border: 2px solid green;" @input="$emit('input', $event.target.value)">
+        <input 
+            type="text" 
+            :value="value" 
+            style="padding: 30px; border: 2px solid green;" 
+            @input="$emit('input', $event.target.value)"
+        >
     </div>
 </template>
 

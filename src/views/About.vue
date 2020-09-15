@@ -37,6 +37,8 @@
             대신, 자식 component 에서는 props object 의 'name' 이 아닌 'value' 를 사용해야 한다.
         -->
         <!-- <InputField :name="name" @update-name="name = $event.target.value" /> -->
+
+        <!-- component 에 v-model="name" 사용 시 자식 component(InputField.vue) 에는 value 가 전달된다. -->
         <InputField v-model="name" />
         <br><button @click="Submit">Submit</button>
     </form>

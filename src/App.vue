@@ -67,8 +67,9 @@
 <script>
 //--- $ npm install array-to-tree --save
 //--- https://www.npmjs.com/package/array-to-tree
-/*
-var arrayToTree = require('array-to-tree');
+
+//var arrayToTree = require('array-to-tree');
+import arrayToTree from "array-to-tree"
 
 var dataOne = [
   {
@@ -93,8 +94,8 @@ var dataOne = [
   }
 ];
  
-console.log(arrayToTree(dataOne));
-*/
+console.log('arrayToTree', arrayToTree(dataOne));
+
 
 export default {
   name: 'app',
