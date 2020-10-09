@@ -31,6 +31,10 @@ const AllUsers = () => {
     return import ('@/components/Users/AllUsers.vue')
 }
 
+const AddUser = () => {
+    return import ('../views/AddUser.vue')
+}
+
 const TreeList = () => {
     return import ('../views/TreeMain.vue')
 }
@@ -101,6 +105,11 @@ const routes = [{
         component: AllUsers
     },
     {
+        path: '/add-user',
+        name: 'AddUser',
+        component: AddUser
+    },
+    {
         path: '/tree',
         name: 'TreeList',
         component: TreeList
@@ -121,10 +130,12 @@ const routes = [{
     },
     //--- 주소창에 사용자가 임의로 예상치못한 주소를 입력하게될 경우 Home 과 같은 경로로 redirect 시켜준다.
     //--- path: '/*' : 위에 선언된 모든 주소에서 경로를 찾을 수 없는 경우 redirect 경로로 이동시킨다.
+    /*
     {
         path: '/*',
         redirect: { name: 'Home' }
     }
+    */
 ]
 
 /*

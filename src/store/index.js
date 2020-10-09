@@ -25,7 +25,7 @@ Vue.use(Vuex)
  */
 
 export default new Vuex.Store({
-    //--- state : 상태값 정의. Vue Instance 의 data() 에 역할을 한다.
+    //--- state : 상태값 정의. Vue Instance 의 data() 역할을 한다.
     //--- Component 에서 data 를 정의한 것처럼 넣어주면 된다.
     state: {
         allUsers: [
@@ -35,6 +35,23 @@ export default new Vuex.Store({
             { userId: 'cha2001', password: '900', name: '채연', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F112%2F2020%2F04%2F03%2F202004032153247161879_20200403215442_01_20200403215911849.jpg&type=b400' },
         ]
     },
+    //--- getters : Vue Instance 의 computed 역할을 한다.
+    getters: {
+        allUsersCount: state => {
+            return state.allUsers.length
+        },
+        countOfSeoul: state => {
+            let count = 0
+            state.allUsers.forEach(user => {
+                if (user.address === 'Seoul') count++
+            });
+            return count
+        },
+        //--- state 를 꼭 써줘야 두번째 인자로 getters 를 받을 수 있다.
+        percentOfSeoul: (state, getters) => {
+            return Math.round(getters.countOfSeoul / getters.allUsersCount * 100)
+        }
+    },
     //--- mutations event 호출하는 component 에서 click event 라 가정 시
     /*
      ** methods: {
@@ -43,13 +60,60 @@ export default new Vuex.Store({
      **      }
      ** }
      */
+
+    //--- mutations : Vue Instance 의 method 역할을 한다.
+    //--- 모든 기능이 동기로 동작한다.
+    //--- state 값을 변화시키는 역할을 한다.
+    //--- 예를 들어, 회원 가입 항목을 기재 후 완료하면, 전체 유저수에 1명의 유저가 추가되면서 전체 유저에 대한 state 가 변경되는 것이다.
+
+    /*
+    ** 많은 컴포넌트에서 하나의 state 값을 변경하기 위해 기존에는
+    ** 각 각의 컴포넌트에서 메소드를 통하여 state 값을 변경했을 것이다.
+
+    ** 1번 컴포넌트에도 addUsers 라는 메소드로 유저를 추가하는 함수가 존재하고 state 가 변경되면,
+    ** 2번 컴포넌트 또한 addUsers 라는 메소드로 유저를 추가하는 함수가 존재하고 state 가 변경되도록 했을 것이다.
+
+    ** 이러한 중복적인 처리를 각 각의 컴포넌트에서 처리하지 않고,
+    ** store 파일 내에서 state 값을 변화시키는 Mutations 이 있는 것이다.
+
+    ** 같은 기능을 하는 어떤 함수를 Mutation 내에 만들어놓고, 각각의 컴포넌트에서 실행시키는 것이다.
+    ** 실행 시키는 방법을 'Commit' 이라 한다.
+
+    ** 즉, 각각의 컴포넌트 내에서 어떤 함수들로 state 를 변화시키는 것이 아닌,
+    ** 각각의 컴포넌트 내에서 Mutation 내에 저장되어 있는 함수를 'Commit' 해서 state 값을 변화시킨다.
+    */
     mutations: {
         /*
         selectedUser(state, userId) {
 
         }
         */
+
+        //--- state 를 변화시키기 위해 첫번째 인자로 state 를 받는다,
+        //--- 두번째 인자로는 addUsers 를 실행시키는 컴포넌트의 전달 인자값을 통상적으로 'payload' 라 한다.
+
+        //--- addUsers 함수는 유저를 추가하는 함수이므로, 해당 함수를 사용하는 컴포넌트는 당연히
+        //--- 회원가입 입력 폼을 통해 값을 입력한 이후 회원가입을 완료하게 되고, 그때 입력한 값들을
+        //--- store 파일의 mutations 내의 addUsers 를 실행할 때('Commit') 넘겨줘야 하는 것이다.
+        addUsers: (state, payload) => {
+            state.allUsers.push(payload)
+        }
     },
-    actions: {},
+    //--- mutations 는 state 값을 변화시키는 목적이고,
+    //--- actions 는 state 값을 변화시키기 위한 복잡한 비지니스 로직을 처리하고,
+    //--- 최종 변화할 값만을 mutations 함수에 commit 을 통해 전달한다.
+
+    //--- 예를 들어, 비동기 방식으로 서버와 통신을 해서, 회원에 중복 검사를 하고, 비밀번호도 체크를 하는 등의
+    //--- 복잡한 모든 처리가 다 이루어져서 유저가 추가가 가능한 경우에만 mutations 함수에 commit 을 통해 전달한다.
+    actions: {
+        addUsers: ({ commit }, payload) => {
+            commit('addUsers', payload)
+        },
+        alramCheck: () => {
+            setInterval(() => {
+                window.open("/all-users", "PopupWin", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=700,height=600", true)
+            }, 7000);
+        }
+    },
     modules: {}
 })

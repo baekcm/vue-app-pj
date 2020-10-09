@@ -184,5 +184,11 @@ export const demo = new Vue({
 new Vue({
     router,
     store,
+    //--- 공통 영역에서 store 팝업 open 방법 2
+    /*
+    beforeCreate() {
+        this.$store.dispatch('alramCheck')
+    },
+    */
     render: h => h(App)
 }).$mount('#app')

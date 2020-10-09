@@ -16,6 +16,8 @@
 
       <router-link to="/all-users">AllUsers</router-link> |
 
+      <router-link to="/add-user">AddUser</router-link> |
+
       <router-link to="/tree">TreeList</router-link> |
 
       <router-link to="/treeview">TreeView</router-link> |
@@ -58,6 +60,8 @@
     </ul>
      -->
 
+    {{ this.$router.push({ name: 'AllUsers' }) }}
+
     <footer-app />
 
   </div>
@@ -70,6 +74,7 @@
 
 //var arrayToTree = require('array-to-tree');
 import arrayToTree from "array-to-tree"
+//import { mapMutations } from 'vuex';
 
 var dataOne = [
   {
@@ -101,6 +106,7 @@ export default {
   name: 'app',
   data () {
     return {
+      message : "",
       open: ['public'],
       files: {
         html: 'mdi-language-html5',
@@ -187,12 +193,33 @@ export default {
       ]
     }
   },
+  methods:{
+        testFunction: function () {
+            /*
+            var v = this;
+            setInterval(function () {
+                v.message = new Date().toLocaleTimeString();
+            }, 3000);
+            */
+
+            setInterval( () => {
+                window.open("/all-users", "PopupWin", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=700,height=600", true)
+            }, 7000);
+        }
+    },
   computed: {
     filter () {
       return this.caseSensitive
         ? (item, search, textKey) => item[textKey].indexOf(search) > -1
         : undefined
     }
+  },
+  mounted () {
+      //this.testFunction()
+  },
+  //--- 공통 영역에서 store 팝업 open 방법 1
+  created() {
+    //this.$store.dispatch('alramCheck')
   }
 }
 </script>
