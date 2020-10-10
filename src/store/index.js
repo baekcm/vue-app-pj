@@ -110,8 +110,12 @@ export default new Vuex.Store({
             commit('addUsers', payload)
         },
         alramCheck: () => {
+            let width = 700
+            let height = 600
+            let left = (screen.width - width) / 2;
+            let top = (screen.height - height) / 2;
             setInterval(() => {
-                window.open("/all-users", "PopupWin", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=700,height=600", true)
+                window.open("/all-users", "PopupWin", `toolbar=yes,scrollbars=yes,resizable=yes,top=${ top },left=${ left },width=${ width },height=${ height }`, true)
             }, 7000);
         }
     },
