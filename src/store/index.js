@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '../router'
 
 Vue.use(Vuex)
 
@@ -36,6 +37,8 @@ export default new Vuex.Store({
             { userId: 'cha2001', password: '900', name: '채연', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F112%2F2020%2F04%2F03%2F202004032153247161879_20200403215442_01_20200403215911849.jpg&type=b400' },
         ],
         //result: []
+        isLogin: false,
+        isLoginError: false
     },
     //--- getters : Vue Instance 의 computed 역할을 한다.
     getters: {
@@ -85,12 +88,16 @@ export default new Vuex.Store({
     ** 각각의 컴포넌트 내에서 Mutation 내에 저장되어 있는 함수를 'Commit' 해서 state 값을 변화시킨다.
     */
     mutations: {
-        /*
-        selectedUser(state, userId) {
-
-        }
-        */
-
+        //--- 로그인 성공 시
+        loginSucess(state) {
+            state.isLogin = true
+            state.isLoginError = false
+        },
+        //--- 로그인 실패 시
+        loginFail(state) {
+            state.isLogin = false
+            state.isLoginError = true
+        },
         //--- state 를 변화시키기 위해 첫번째 인자로 state 를 받는다,
         //--- 두번째 인자로는 addUsers 를 실행시키는 컴포넌트의 전달 인자값을 통상적으로 'payload' 라 한다.
 
@@ -109,6 +116,7 @@ export default new Vuex.Store({
     //--- actions 는 state 값을 변화시키기 위한 복잡한 비지니스 로직을 처리하고,
     //--- 최종 변화할 값만을 mutations 함수에 commit 을 통해 전달한다.
 
+    //--- actions : 비지니스 로직 수행. Vue Instance 의 method 역할을 한다.
     //--- 예를 들어, 비동기 방식으로 서버와 통신을 해서, 회원에 중복 검사를 하고, 비밀번호도 체크를 하는 등의
     //--- 복잡한 모든 처리가 다 이루어져서 유저가 추가가 가능한 경우에만 mutations 함수에 commit 을 통해 전달한다.
     actions: {
@@ -121,30 +129,88 @@ export default new Vuex.Store({
                     //this.result = res.data;
                     if (res.data.data.length) {
                         let dataset = [
-                            { userId: 'one2006', password: '123', name: '원영', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5095%2F2020%2F06%2F15%2F0000925519_004_20200615165007685.jpg&type=b400' },
-                            { userId: 'minju2003', password: '456', name: '민주', address: 'Berlin', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5403%2F2020%2F07%2F24%2F0000049673_001_20200724130643689.jpg&type=b400' },
-                            { userId: 'yuri2003', password: '789', name: '유리', address: 'Busan', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F433%2F2020%2F07%2F13%2F0000069868_002_20200713183114173.jpg&type=b400' },
-                            { userId: 'cha2001', password: '900', name: '채연', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F112%2F2020%2F04%2F03%2F202004032153247161879_20200403215442_01_20200403215911849.jpg&type=b400' },
-                            { userId: 'yena99', password: '1234', name: '예나', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F311%2F2020%2F06%2F24%2F0001166434_001_20200624225107369.jpg&type=sc960_832' },
-                        ]
+                                { userId: 'one2006', password: '123', name: '원영', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5095%2F2020%2F06%2F15%2F0000925519_004_20200615165007685.jpg&type=b400' },
+                                { userId: 'minju2003', password: '456', name: '민주', address: 'Berlin', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5403%2F2020%2F07%2F24%2F0000049673_001_20200724130643689.jpg&type=b400' },
+                                { userId: 'yuri2003', password: '789', name: '유리', address: 'Busan', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F433%2F2020%2F07%2F13%2F0000069868_002_20200713183114173.jpg&type=b400' },
+                                { userId: 'cha2001', password: '900', name: '채연', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F112%2F2020%2F04%2F03%2F202004032153247161879_20200403215442_01_20200403215911849.jpg&type=b400' },
+                                { userId: 'yena99', password: '1234', name: '예나', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F311%2F2020%2F06%2F24%2F0001166434_001_20200624225107369.jpg&type=sc960_832' },
+                            ]
+                            /*
+                            let width = 700
+                            let height = 600
+                            let left = (screen.width - width) / 2;
+                            let top = (screen.height - height) / 2;
+                            setInterval(() => {
+                                window.open("/all-users", "PopupWin", `toolbar=yes,scrollbars=yes,resizable=yes,top=${ top },left=${ left },width=${ width },height=${ height }`, true)
+                            }, 7000);
+                            */
                         commit('resultSet', dataset)
                     }
                 })
                 .catch((err) => {
                     console.log('error', err);
                 });
+        },
+        //--- 로그인 시도
+        //--- action 을 분리하여, 새로 고침 시 state 정보가 초기화 되어도 token 을 localStorage 에 넣어서 로그인 상태를 유지한다.
+        login({ dispatch }, loginObj) {
+            //--- 로그인 -> 토큰 반환
+            axios.post("https://reqres.in/api/login", loginObj) // post 방식은 parameter(body) 를 넘긴다.
+                .then(res => {
+                    //--- 성공 시 token 을 받아온다.
+                    //--- token 을 header 에 포함시켜서 유저 정보를 요청한다.
+                    let token = res.data.token
+                        //--- token 을 localStorage 에 저장한다.
+                    localStorage.setItem("access-token", token)
+                        //--- action 을 실행시키기 위한 명령어 'dispatch' 를 사용하여, getUserInfo 함수를 실행한다.
+                    dispatch("getUserInfo")
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        },
+        logout({ commit }) {
+            commit("logout")
+            router.push({ name: "home" })
+        },
+        getUserInfo({ commit }) {
+            //--- localStorage 에 저장되어 있는 token 을 불러온다.
+            //--- config : header 값을 설정해줄 수 있고, header 내에 token 을 포함시키기 위해 사용한다.
+            let token = localStorage.getItem("access-token")
 
+            let config = {
+                headers: {
+                    "access-token": token
+                }
+            }
 
-            /*
-            let width = 700
-            let height = 600
-            let left = (screen.width - width) / 2;
-            let top = (screen.height - height) / 2;
-            setInterval(() => {
-                window.open("/all-users", "PopupWin", `toolbar=yes,scrollbars=yes,resizable=yes,top=${ top },left=${ left },width=${ width },height=${ height }`, true)
-            }, 7000);
-            */
+            //--- get 방식은 config 를 넘긴다.
+            //--- 보안과 관련된 header, option 등을 설정할 수 있는 파일이 온다.
+            //--- 토큰 -> 유저 정보를 반환
+            //--- 새로 고침 -> state 가 초기화되므로, token 만 가지고 유저 정보를 요청
+            axios.get("https://reqres.in/api/users/2", config)
+                .then(response => {
+                    console.log(response)
+                    let userInfo = {
+                        id: response.data.data.id,
+                        firstName: response.data.data.firstName,
+                        lastName: response.data.data.lastName,
+                        avatar: response.data.data.avatar
+                    }
+                    commit("loginSuccess", userInfo)
+                        //--- 로그인 성공 시 페이지 이동
+                        //--- this.$router 는 Vue Instance 내에서 불러오는 경우에 가능하지만, 
+                        //--- Vue Instance 내부에서 작업을 하고 있지 않으므로, router.js 파일을 import 해야 한다.
+                        //this.$router.push({ name: "AllUsers" })
+                    router.push({ name: "AllUsers" })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
     },
+    //-- action 을 분리하여, 새로 고침 시 state 정보가 초기화 되어도 token 을 localStorage 에 넣어서 로그인 상태를 유지한다.
+    //-- localStorage 값을 확인하기 위해서는 Chrome 에서 Application 탭으로 이동하고,
+    //-- Storage 영역에 Local Storage 가 확인된다.
     modules: {}
 })

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '../store'
 
 //--- component 를 입력하는 방식 - [1 번]
 //import About from '../views/About.vue'
@@ -35,19 +36,19 @@ const AddUser = () => {
     return import ('../views/AddUser.vue')
 }
 
-const TreeList = () => {
-    return import ('../views/TreeMain.vue')
-}
-
-const TreeView = () => {
-    return import ('../views/TreeView.vue')
-}
-
-const TreeViewTwo = () => {
-    return import ('../views/TreeView2.vue')
-}
-
 Vue.use(VueRouter)
+
+
+//--- 가드 함수를 만든다.
+//--- 인증 받은 유저는(로그인 된 상태의 유저는) reject 하겠다는 의미.
+const rejectAuthUser = (to, from, next) => {
+    if (store.state.isLogin) {
+        alert("이미 로그인 된 유저입니다.")
+        next("/")
+    } else {
+        next()
+    }
+}
 
 const routes = [{
         path: '/',
@@ -64,6 +65,14 @@ const routes = [{
         //--- component 를 입력하는 방식 - [3 번]
         //component: () => import ( /* webpackChunkName: "about" */ '../views/About.vue')
         component: About
+    },
+    {
+        path: '/login',
+        name: 'login',
+        //--- beforeEnter : router 에 들어오기 전에 지정한 함수를 실행해보고,
+        //--- next() 하고 아무것도 없으면 import 파일로 이동하고, next('path') 가 있는 경우 redirect 한다.
+        beforeEnter: rejectAuthUser,
+        component: import ('../views/Login.vue')
     },
     {
         //path: '/users',
@@ -108,21 +117,6 @@ const routes = [{
         path: '/add-user',
         name: 'AddUser',
         component: AddUser
-    },
-    {
-        path: '/tree',
-        name: 'TreeList',
-        component: TreeList
-    },
-    {
-        path: '/treeview',
-        name: 'TreeView',
-        component: TreeView
-    },
-    {
-        path: '/treeviewtwo',
-        name: 'TreeViewtwo',
-        component: TreeViewTwo
     },
     {
         path: '/redirect-me',
