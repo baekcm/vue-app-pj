@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from 'axios'
 
 //--- 전역적으로 사용할 vue 파일을 import 한다.
 import header from './header'
@@ -13,6 +14,8 @@ Vue.use(Tree)
 
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
+
+Vue.use(axios)
 
 // index.js or main.js
 import 'vuetify/dist/vuetify.min.css'
@@ -185,10 +188,8 @@ new Vue({
     router,
     store,
     //--- 공통 영역에서 store 팝업 open 방법 2
-    /*
     beforeCreate() {
         this.$store.dispatch('alramCheck')
     },
-    */
     render: h => h(App)
 }).$mount('#app')

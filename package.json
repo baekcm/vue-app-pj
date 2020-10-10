@@ -10,6 +10,7 @@
     "dependencies": {
         "@syncfusion/ej2-vue-navigations": "^18.2.57",
         "array-to-tree": "^3.3.2",
+        "axios": "^0.20.0",
         "core-js": "^3.6.5",
         "vue": "^2.6.11",
         "vue-json-tree-view": "^2.1.6",
