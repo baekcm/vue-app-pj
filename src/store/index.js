@@ -110,6 +110,7 @@ export default new Vuex.Store({
         resultSet: (state, payload) => {
             //state.result = payload
             state.allUsers = payload
+            console.log('mutations')
         }
     },
     //--- mutations 는 state 값을 변화시키는 목적이고,
@@ -145,6 +146,7 @@ export default new Vuex.Store({
                             }, 7000);
                             */
                         commit('resultSet', dataset)
+                        console.log('actions')
                     }
                 })
                 .catch((err) => {

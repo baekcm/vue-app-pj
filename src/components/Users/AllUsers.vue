@@ -52,6 +52,10 @@ import { eventBus } from '@/main.js'
         },
         computed : {
             //...mapGetters(['allUsersCount', 'countOfSeoul', 'percentOfSeoul'])
+            testMethod() {
+                console.log('allUsers')
+                return null
+            },
 
             //--- 객체 형태로 받아서 사용할 수 있다.
             //--- 실제 store 파일에 저장되어 있는 값을 이 컴포넌트에서는 count, seouls, percent 로 사용하겠다는 의미.
@@ -70,6 +74,8 @@ import { eventBus } from '@/main.js'
                 //--- $store.state.배열명에 형제 component 로 전달받은 users 값을 배열에 추가한다.
                 this.$store.state.allUsers.push(users);
             })
+
+            this.testMethod
         }
     }
     
