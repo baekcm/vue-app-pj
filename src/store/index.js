@@ -130,21 +130,12 @@ export default new Vuex.Store({
                     //this.result = res.data;
                     if (res.data.data.length) {
                         let dataset = [
-                                { userId: 'one2006', password: '123', name: '원영', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5095%2F2020%2F06%2F15%2F0000925519_004_20200615165007685.jpg&type=b400' },
-                                { userId: 'minju2003', password: '456', name: '민주', address: 'Berlin', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5403%2F2020%2F07%2F24%2F0000049673_001_20200724130643689.jpg&type=b400' },
-                                { userId: 'yuri2003', password: '789', name: '유리', address: 'Busan', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F433%2F2020%2F07%2F13%2F0000069868_002_20200713183114173.jpg&type=b400' },
-                                { userId: 'cha2001', password: '900', name: '채연', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F112%2F2020%2F04%2F03%2F202004032153247161879_20200403215442_01_20200403215911849.jpg&type=b400' },
-                                { userId: 'yena99', password: '1234', name: '예나', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F311%2F2020%2F06%2F24%2F0001166434_001_20200624225107369.jpg&type=sc960_832' },
-                            ]
-                            /*
-                            let width = 700
-                            let height = 600
-                            let left = (screen.width - width) / 2;
-                            let top = (screen.height - height) / 2;
-                            setInterval(() => {
-                                window.open("/all-users", "PopupWin", `toolbar=yes,scrollbars=yes,resizable=yes,top=${ top },left=${ left },width=${ width },height=${ height }`, true)
-                            }, 7000);
-                            */
+                            { userId: 'one2006', password: '123', name: '원영', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5095%2F2020%2F06%2F15%2F0000925519_004_20200615165007685.jpg&type=b400' },
+                            { userId: 'minju2003', password: '456', name: '민주', address: 'Berlin', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5403%2F2020%2F07%2F24%2F0000049673_001_20200724130643689.jpg&type=b400' },
+                            { userId: 'yuri2003', password: '789', name: '유리', address: 'Busan', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F433%2F2020%2F07%2F13%2F0000069868_002_20200713183114173.jpg&type=b400' },
+                            { userId: 'cha2001', password: '900', name: '채연', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F112%2F2020%2F04%2F03%2F202004032153247161879_20200403215442_01_20200403215911849.jpg&type=b400' },
+                            { userId: 'yena99', password: '1234', name: '예나', address: 'Seoul', src: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F311%2F2020%2F06%2F24%2F0001166434_001_20200624225107369.jpg&type=sc960_832' },
+                        ]
                         commit('resultSet', dataset)
                         console.log('actions')
                     }
@@ -152,6 +143,13 @@ export default new Vuex.Store({
                 .catch((err) => {
                     console.log('error', err);
                 });
+        },
+        alramPopup: () => {
+            let width = 700
+            let height = 600
+            let left = (screen.width - width) / 2;
+            let top = (screen.height - height) / 2;
+            window.open("/usersPopup", "PopupWin", `toolbar=yes,scrollbars=yes,resizable=yes,top=${ top },left=${ left },width=${ width },height=${ height }`, true)
         },
         //--- 로그인 시도
         //--- action 을 분리하여, 새로 고침 시 state 정보가 초기화 되어도 token 을 localStorage 에 넣어서 로그인 상태를 유지한다.

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <button @click="popupOpen">Interval</button>
         <!-- mapGetters 사용을 위해 주석 처리한다. -->
         <!--
         <h1>All Users({{ $store.getters.allUsersCount }})</h1>
@@ -29,6 +30,7 @@
             <li>{{ user.name }}</li>
             <li>id:#{{ index }} / {{ user.address }} 거주</li>
         </ul>
+
     </div>
 </template>
 
@@ -48,7 +50,9 @@ import { eventBus } from '@/main.js'
             }
         },
         methods: {
-            
+            popupOpen() {
+                window.open("/usersPopup", "PopupWin", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=100,width=1000,height=700")
+            }
         },
         computed : {
             //...mapGetters(['allUsersCount', 'countOfSeoul', 'percentOfSeoul'])

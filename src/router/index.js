@@ -36,6 +36,10 @@ const AddUser = () => {
     return import ('../views/AddUser.vue')
 }
 
+const UsersPopup = () => {
+    return import ('@/components/Users/UsersPopup.vue')
+}
+
 Vue.use(VueRouter)
 
 
@@ -112,6 +116,11 @@ const routes = [{
         //--- component 를 입력하는 방식 - [3 번]
         //component: () => import ( /* webpackChunkName: "about" */ '../views/About.vue')
         component: AllUsers
+    },
+    {
+        path: '/usersPopup',
+        name: 'UsersPopup',
+        component: UsersPopup
     },
     {
         path: '/add-user',

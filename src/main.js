@@ -189,7 +189,8 @@ new Vue({
     store,
     //--- 공통 영역에서 store 팝업 open 방법 2
     //beforeCreate() {
-    //    this.$store.dispatch('alramCheck')
+    //    this.$store.dispatch('alramPopup')
+    //window.open("/usersPopup", "PopupWin", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=100,width=1000,height=700")
     //},
     render: h => h(App)
 }).$mount('#app')

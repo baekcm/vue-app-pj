@@ -36,6 +36,8 @@
   
 </template>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>
+
 <script>
 //--- $ npm install array-to-tree --save
 //--- https://www.npmjs.com/package/array-to-tree
@@ -43,6 +45,12 @@
 //var arrayToTree = require('array-to-tree');
 import arrayToTree from "array-to-tree"
 //import { mapMutations } from 'vuex';
+
+//import VueLodash from 'vue-lodash'
+//import lodash from 'lodash'
+import Vue from 'vue'
+
+//Vue.use(VueLodash, { name: 'custom' , lodash: lodash })
 
 var dataOne = [
   {
@@ -80,21 +88,29 @@ export default {
     }
   },
   methods:{
-        testFunction: function () {
-            /*
-            var v = this;
-            setInterval(function () {
-                v.message = new Date().toLocaleTimeString();
-            }, 3000);
-            */
-
-            setInterval( () => {
-                window.open("/all-users", "PopupWin", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=700,height=600", true)
-            }, 7000);
-        }
+    alarmPopup : function() {
+      console.log('11111')
+      //let width = 700
+      //let height = 600
+      //let left = (screen.width - width) / 2;
+      //let top = (screen.height - height) / 2;
+      //window.open("/usersPopup", "PopupWin", `toolbar=yes,scrollbars=yes,resizable=yes,top=${ top },left=${ left },width=${ width },height=${ height }`, true)
+      window.open("/usersPopup", "PopupWin", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=100,width=1000,height=700")
+    },
+    test() {
+      console.log(this.lodash.random(20))
+      console.log(this._.random(20))
+      console.log(this.custom.random(20))
+    },
+    isArrayEqual() {
+      let x = [{a:1, b:2}, {c:3, d:4}]
+      let y = [{b:2, a:1}, {d:4, c:3}]
+      return _(x).differenceWith(y, _.isEqual).isEmpty();
+    }
   },
   beforeCreate() {
-    this.$store.dispatch('alramCheck')
+    //this.$store.dispatch('alramCheck')
+    //this.$store.dispatch('alramPopup')
   },
   computed: {
     filter () {
@@ -104,11 +120,22 @@ export default {
     }
   },
   mounted () {
-      //this.testFunction()
+      //this.alarmPopup()
+      //this.test()
+      console.log('equlas', this.isArrayEqual(this.x, this.y))
   },
   //--- 공통 영역에서 store 팝업 open 방법 1
   created() {
     //this.$store.dispatch('alramCheck')
+
+    //let width = 700
+    //let height = 600
+    //let left = (screen.width - width) / 2;
+    //let top = (screen.height - height) / 2;
+    //window.open("/usersPopup", "PopupWin", `toolbar=yes,scrollbars=yes,resizable=yes,top=${ top },left=${ left },width=${ width },height=${ height }`, true)
+
+
+
   }
 }
 </script>
