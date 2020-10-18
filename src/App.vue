@@ -123,6 +123,13 @@ export default {
       //this.alarmPopup()
       //this.test()
       console.log('equlas', this.isArrayEqual(this.x, this.y))
+
+      const a = [{ answer: 42 }, { powerLevel: 9001 }];
+      const b = [{ answer: 42 }, { powerLevel: 9001 }];
+      const c = [{ answer: 42 }, { password: 'taco' }];
+
+      console.log('stringify1', JSON.stringify(a) === JSON.stringify(b)) // true
+      console.log('stringify2', JSON.stringify(a) === JSON.stringify(c)) // false
   },
   //--- 공통 영역에서 store 팝업 open 방법 1
   created() {
