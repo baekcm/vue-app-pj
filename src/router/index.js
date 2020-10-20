@@ -44,12 +44,29 @@ Vue.use(VueRouter)
 
 
 //--- 가드 함수를 만든다.
-//--- 인증 받은 유저는(로그인 된 상태의 유저는) reject 하겠다는 의미.
+//--- 인증 받은 유저는(로그인 된 상태의 유저는) reject(받지 않다) 하겠다는 의미.
 const rejectAuthUser = (to, from, next) => {
-    if (store.state.isLogin) {
+    //--- 이미 로그인 된 유저니까 막아야...
+    if (store.state.isLogin === true) {
         alert("이미 로그인 된 유저입니다.")
+            //--- from => to 로 가는 path 를 'Home' 으로 명시.
         next("/")
     } else {
+        //--- from => to 로 가는 path 를 자연스럽게 둔다.
+        //--- 들어가려고 하는 곳으로 그냥 보내준다.
+        next()
+    }
+}
+
+const onlyAuthUser = (to, from, next) => {
+    //--- 아직 로그인이 안된 유저니까 막아야...
+    if (store.state.isLogin === false) {
+        alert("로그인이 필요한 경로입니다.")
+            //--- from => to 로 가는 path 를 'Home' 으로 명시.
+        next("/")
+    } else {
+        //--- from => to 로 가는 path 를 자연스럽게 둔다.
+        //--- 들어가려고 하는 곳으로 그냥 보내준다.
         next()
     }
 }
@@ -75,7 +92,17 @@ const routes = [{
         name: 'login',
         //--- beforeEnter : router 에 들어오기 전에 지정한 함수를 실행해보고,
         //--- next() 하고 아무것도 없으면 import 파일로 이동하고, next('path') 가 있는 경우 redirect 한다.
+        //--- 인증된 회원을 거부한다.
         beforeEnter: rejectAuthUser,
+        component: import ('../views/Mypage.vue')
+    },
+    {
+        path: '/mypage',
+        name: 'mypage',
+        //--- beforeEnter : router 에 들어오기 전에 지정한 함수를 실행해보고,
+        //--- next() 하고 아무것도 없으면 import 파일로 이동하고, next('path') 가 있는 경우 redirect 한다.
+        //--- 인증된 회원만 받아들이겠다.
+        beforeEnter: onlyAuthUser,
         component: import ('../views/Login.vue')
     },
     {
