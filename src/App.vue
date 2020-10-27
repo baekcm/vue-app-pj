@@ -17,6 +17,11 @@
 
       <router-link to="/add-user">AddUser</router-link>
 
+      <label>
+          <button class="btn btn-primary btn-sm" @click.prevent="playSound('http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')"><span class="fa fa-play-circle-o"></span></button>
+          Play Air Plane Ding
+      </label>
+
     <router-view />
 
     <!-- 
@@ -88,6 +93,26 @@ export default {
     }
   },
   methods:{
+    playSound (sound) {
+      if(sound) {
+        var audio = new Audio(sound);
+        audio.play();
+      }
+    },
+    playSoundTest() {
+			const path = './assets/bing.wav';
+			const audio = new Audio(path);
+			var playPromise = audio.play();
+
+			if (playPromise !== undefined) {
+				playPromise.then( () => {
+					console.log('Did you hear that?');
+				})
+				.catch(error => {
+					console.log(`playSound error: ${error}`);
+				});
+			}
+		},
     alarmPopup : function() {
       console.log('11111')
       //let width = 700
@@ -120,6 +145,8 @@ export default {
     }
   },
   mounted () {
+      this.playSound('http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
+      //this.playSoundTest()
       //this.alarmPopup()
       //this.test()
       console.log('equlas', this.isArrayEqual(this.x, this.y))
