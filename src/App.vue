@@ -90,6 +90,11 @@ export default {
       message : "",
       open: ['public'],
       tree: [],
+      soundEffect: new Audio('/mp3/initiate.mp3'),
+      sound: {
+          sound1: 'http://localhost:8080/bbi.mp3',
+          sound2: 'http://localhost:8080/bboung.mp3',
+      },
     }
   },
   methods:{
@@ -98,6 +103,12 @@ export default {
         var audio = new Audio(sound);
         audio.play();
       }
+    },
+    playSound2(sound) {
+        if (sound) {
+            this.soundEffect.src = sound
+            this.soundEffect.play()
+        }
     },
     playSoundTest() {
 			const path = './assets/bing.wav';
@@ -147,7 +158,12 @@ export default {
   mounted () {
       //this.playSound('http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
       //this.playSound('http://localhost:8080/shick.mp3')
-      this.playSound('http://localhost:8080/bbing.mp3')
+      //this.playSound('http://localhost:8080/bbing.mp3')
+      //this.playSound2('http://localhost:8080/Bbourong.mp3')
+      //this.playSound2(this.sound.sound1)
+
+      var audio = new Audio(require('../public/DdiDing.mp3'));
+      audio.play();
 
       //this.alarmPopup()
       //this.test()
