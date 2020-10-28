@@ -146,7 +146,8 @@ export default {
   },
   mounted () {
       //this.playSound('http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
-      this.playSound('http://localhost:8080/bing.mp3')
+      //this.playSound('http://localhost:8080/shick.mp3')
+      this.playSound('http://localhost:8080/bbing.mp3')
 
       //this.alarmPopup()
       //this.test()
